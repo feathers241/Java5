@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Form.html</title>
+</head>
+<body>
+	<h1>Thông tin đăng nhập</h1><br/>
+	<form action = "/Bai4/submit" method = "post">
+	Username : <input name = "username"/><br/>
+	Password : <input name = "password"/><br/>
+	<button>Submit</button>
+	<form>
+	<h2 th:text = "${mess}"></h2>
+</body>
+</html>

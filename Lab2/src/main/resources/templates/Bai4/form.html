@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello</title>
+</head>
+<body>
+	<form action="/Bai4/product/save" method="post"> 
+	    <input name="name"> 
+	    <input name="price"> 
+	    <button>Save</button> 
+	</form> 
+	<ul th:if = "${first}"> 
+	    <li th:text = "${first.name}">?1name</li> 
+	    <li th:text = "${first.price}">?1price</li> 
+	</ul> 
+	<ul th:if = "${second}"> 
+	    <li th:text = "${second.name}">?2name</li> 
+	    <li th:text = "${second.price}">?2price</li> 
+	</ul>
+	<ul th:each = "p : ${Product}" > 
+	    <li th:text = "${p.name} +' | '+${p.price}"></li> 
+	</ul> 
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Form.html</title>
+</head>
+<body>
+	<form method = "post">
+	Chiều dài hình chủ nhật : <input name = "chieuDai"/><br/>
+	Chiều rộng hình chủ nhật : <input name = "chieuRong"/><br/>
+	<button formaction = "/Bai5/chuVi">Tính chu vi hình chủ nhật</button><br/>
+	<button formaction = "/Bai5/dienTich">Tính diện tích hình chủ nhật</button></br>
+	</form>
+	<h2 th:text = "${mess}"></h2>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello</title>
+</head>
+<body>
+	<form action="/Bai3/save" method="post"> 
+	    <input name="name"> 
+	    <input name="price"> 
+	    <button>Save</button> 
+	</form> 
+	<ul th:if = "${items} != null"> 
+	    <li th:text = "${items.name}">?name</li> 
+	    <li th:text = "${items.price}">?price</li> 
+	</ul>
+</body>
+</html>
