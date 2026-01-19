@@ -5,10 +5,9 @@
     <title>Hello</title>
 </head>
 <body>
-	<h1 th:text = "'Hello World'">H</h1>
 	<div> 
-	 <img th:src="@{|/photos/${staff.photo}|}"><hr> 
-	 Email:  
+	 <img th:src="@{|/images/${staff.photo}|}" style = "width = 100px"><hr> 
+	 id:  
 	<b th:text="${staff.id}"></b><hr> 
 	 Họ và tên:  
 	<b th:text="${#strings.capitalizeWords(staff.fullname)}"></b><hr> 

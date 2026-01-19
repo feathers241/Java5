@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello</title>
+</head>
+<body>
+	<form action = "/BaiLamThem/submit" method = "post">
+	<h3>Fill to SelectBox</h3> 
+	<select name="cbo"> 
+	<th:block th:each="staff: ${list}"> 
+	 <option th:value="${staff.fullname}" th:text="${staff.fullname}" th:selected="${staff.fullname == mess1}"></option> 
+	</th:block> 
+	</select> 
+	 
+	<h3>Create Radio Button Group</h3> 
+	<th:block th:each="staff: ${list}"> 
+	 <label> 
+	  <input type="radio" name="rdo" th:value="${staff.fullname}" th:checked="${staff.fullname == mess2}"> 
+	  <th:block th:text="${staff.fullname}"></th:block> 
+	 </label> 
+	 <br> 
+	</th:block> 
+	<label> 
+	<br/>
+	<hr/>
+	<button>Nộp báo cáo</button>
+	</form>
+		<h1 th:if="${mess1}!=null" th:text = "${mess1}"></h1>
+		<h1 th:if="${mess2}!=null" th:text = "${mess2}"></h1>
+</body>
+</html>
