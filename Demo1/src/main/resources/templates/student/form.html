@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello</title>
+</head>
+<body>
+	<form th:action = "@{/student/add}" method = "post">
+		<label>Nhập mã sinh viên</label>
+			<input name = "id"/><br/>
+	    <label>Nhập vào tên sinh viên</label>
+			<input name = "name"/><br/>
+		<button type = "submit">Submit</button>
+	</form>
+	<table border="1">
+	<tr>
+	    <th>ID</th>
+	    <th>Name</th>
+	</tr>
+	<tr th:each="s : ${students}">
+	    <td th:text="${s.id}"></td>
+	    <td th:text="${s.name}"></td>
+	</tr>
+	</table>
+</body>
+</html>

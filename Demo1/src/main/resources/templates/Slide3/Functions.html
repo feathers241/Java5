@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<!-- Các hàm chuỗi -->
+	<h3>Các hàm xử lý chuỗi #string.</h3>
+	<th:block th:with="s = |Nguyễn Văn Thành|">
+		<p th:text="${s}"/>
+		<p th:text="${#strings.isEmpty(s)}"/>
+		<p th:text="| Chiều dài chuỗi = ${#strings.length(s)}|"/>
+		<p th:text="|${#strings.contains(s, 'Văn')}|" />
+		<p th:text="${#strings.toUpperCase(s)}"/>
+		<p th:text="${#strings.substring(s,7,10)}"/>
+	</th:block>
+	
+	<h3>Bên trong ${...} có thể dùng code java </h3>
+	<th:block th:with="s='Trần Tuấn Anh'">
+		<p th:text="${'Số ký tự : ' + s.length}"/>
+		<p th:text="${'Đổi sang Hoa : ' + s.toUpperCase()}"/>
+		<p th:text="${'Ký tự đầu tiên : ' + s.charAt(0)}"/>
+		<p th:text="${'Chuỗi con : ' + s.substring(5,9)}"/>
+	</th:block>
+	
+	<h3>Các hàm xử lý số  #number.</h3>
+	<th:block th:with="x = 34567.893">
+		<p th:text="${#numbers.formatDecimal(x,6,'COMMA', 2,'POINT')}" />
+		<p th:text="${#numbers.formatInteger(1, 3)}" />	
+	</th:block>
+	
+	<h3>Các hàm xử lý ngày #dates.</h3>
+	<th:block th:with="d = ${today}">
+		<p th:text="${#dates.format(d,'dd-MMM-yyyy')}" />
+		<p th:text="|year = ${#dates.year(d)}|" />	
+	</th:block>
+	
+	<!-- Cac hàm list -->
+	<h3>Các hàm xử lý List #List hoặc dùng như đối tượng list trong Java </h3>
+	<th:block th:with="list = ${users}">
+		<p th:text="${#lists.size(list)}" />
+		<p th:text="${#lists.isEmpty(list)}" />
+		<p th:text="${users.size()}" />
+		<p th:text="${users.isEmpty()}" />
+		<p th:text="${users.get(0).getUsername()}" />
+	</th:block>
+</body>
+</html>

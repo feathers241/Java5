@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello</title>
+</head>
+<body>
+	<form action = "/Slide2/upload" method = "post" enctype = "multipart/form-data">
+    Chọn file <input name = "file" type = "file"/>
+	<button type = "submit">Submit</button>
+	</form>
+	<h1 th:text = "'Tên file : '+${name}"> Tên file :</h1>
+</body>
+</html>
