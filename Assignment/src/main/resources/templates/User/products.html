@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh Sách Sản Phẩm - Sweet Cake</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <!-- Navigation Bar -->
+	<nav class="navbar">
+		    <div class="container">
+		        <div class="navbar-brand">
+		            <h1 class="logo">🍰 Sweet Cake</h1>
+		        </div>
+		        <ul class="nav-menu">
+		            <li>
+		                <a th:href="@{/index}" class="active">Trang Chủ</a>
+		            </li>
+		            <li>
+		                <a th:href="@{/products}">Sản Phẩm</a>
+		            </li>
+		            <li>
+		                <a th:href="@{/about}">Giới Thiệu</a>
+		            </li>
+		            <li>
+		                <a th:href="@{/login}" class="auth-btn">Đăng Nhập</a>
+		            </li>
+		            <li>
+		                <a th:href="@{/cart}" class="cart-btn">
+		                    🛒 Giỏ Hàng <span class="cart-count">0</span>
+		                </a>
+		            </li>
+		        </ul>
+		    </div>
+		</nav>
+
+    <!-- Products Section -->
+    <section class="products-page">
+        <div class="container">
+            <h1>Danh Sách Sản Phẩm</h1>
+            
+            <!-- Filters -->
+            <div class="filters">
+                <div class="filter-group">
+                    <label for="categoryFilter">Danh Mục:</label>
+                    <select id="categoryFilter">
+                        <option value="">Tất Cả</option>
+                        <option value="cake">Bánh Kem</option>
+                        <option value="donut">Bánh Donut</option>
+                        <option value="cookie">Bánh Cookie</option>
+                        <option value="tart">Bánh Tart</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="priceFilter">Giá:</label>
+                    <select id="priceFilter">
+                        <option value="">Tất Cả</option>
+                        <option value="0-200">Dưới 200.000đ</option>
+                        <option value="200-500">200.000 - 500.000đ</option>
+                        <option value="500+">Trên 500.000đ</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <input type="text" id="searchInput" placeholder="Tìm kiếm sản phẩm...">
+					<a href="products.html" class="btn btn-primary">Tìm kiếm</a>
+                </div>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="products-grid" id="productsGrid">
+                <!-- Products will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Về Sweet Cake</h4>
+                    <p>Chúng tôi cung cấp những chiếc bánh ngọt tươi ngon, được làm từ những nguyên liệu tốt nhất.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Liên Hệ</h4>
+                    <p>Email: info@sweetcake.vn</p>
+                    <p>Điện thoại: 0123-456-789</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Theo Dõi</h4>
+                    <p>Facebook | Instagram | Twitter</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Sweet Cake. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script src="js/products.js"></script>
+</body>
+</html>

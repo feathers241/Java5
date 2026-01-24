@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Nhập / Đăng Ký - Sweet Cake</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <!-- Navigation Bar -->
+	<nav class="navbar">
+		    <div class="container">
+		        <div class="navbar-brand">
+		            <h1 class="logo">🍰 Sweet Cake</h1>
+		        </div>
+		        <ul class="nav-menu">
+		            <li>
+		                <a th:href="@{/index}" class="active">Trang Chủ</a>
+		            </li>
+		            <li>
+		                <a th:href="@{/products}">Sản Phẩm</a>
+		            </li>
+		            <li>
+		                <a th:href="@{/about}">Giới Thiệu</a>
+		            </li>
+		            <li>
+		                <a th:href="@{/login}" class="auth-btn">Đăng Nhập</a>
+		            </li>
+		            <li>
+		                <a th:href="@{/cart}" class="cart-btn">
+		                    🛒 Giỏ Hàng <span class="cart-count">0</span>
+		                </a>
+		            </li>
+		        </ul>
+		    </div>
+		</nav>
+
+    <!-- Auth Section -->
+    <section class="auth-page">
+        <div class="auth-container">
+            <!-- Login Form -->
+            <div class="auth-box" id="loginBox">
+                <h2>Đăng Nhập</h2>
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="loginEmail">Email:</label>
+                        <input type="email" id="loginEmail" required placeholder="Nhập email của bạn">
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Mật Khẩu:</label>
+                        <input type="password" id="loginPassword" required placeholder="Nhập mật khẩu">
+                    </div>
+                    <div class="form-group checkbox">
+                        <input type="checkbox" id="rememberMe">
+                        <label for="rememberMe">Ghi nhớ tôi</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Đăng Nhập</button>
+                    <div class="form-links">
+                        <a href="#" onclick="toggleForgotPassword()">Quên mật khẩu?</a>
+                    </div>
+                </form>
+                <p class="auth-switch">Chưa có tài khoản? <a href="#" onclick="switchToRegister()">Đăng Ký Ngay</a></p>
+            </div>
+
+            <!-- Register Form -->
+            <div class="auth-box" id="registerBox" style="display: none;">
+                <h2>Đăng Ký</h2>
+                <form id="registerForm" onsubmit="handleRegister(event)">
+                    <div class="form-group">
+                        <label for="registerName">Họ và Tên:</label>
+                        <input type="text" id="registerName" required placeholder="Nhập họ và tên">
+                    </div>
+                    <div class="form-group">
+                        <label for="registerEmail">Email:</label>
+                        <input type="email" id="registerEmail" required placeholder="Nhập email của bạn">
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPhone">Số Điện Thoại:</label>
+                        <input type="tel" id="registerPhone" required placeholder="Nhập số điện thoại">
+                    </div>
+                    <div class="form-group">
+                        <label for="registerAddress">Địa Chỉ:</label>
+                        <input type="text" id="registerAddress" required placeholder="Nhập địa chỉ">
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword">Mật Khẩu:</label>
+                        <input type="password" id="registerPassword" required placeholder="Nhập mật khẩu (tối thiểu 6 ký tự)">
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword2">Xác Nhận Mật Khẩu:</label>
+                        <input type="password" id="registerPassword2" required placeholder="Xác nhận mật khẩu">
+                    </div>
+                    <div class="form-group checkbox">
+                        <input type="checkbox" id="agreeTerms" required>
+                        <label for="agreeTerms">Tôi đồng ý với <a href="#">Điều Khoản Sử Dụng</a></label>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Đăng Ký</button>
+                </form>
+                <p class="auth-switch">Đã có tài khoản? <a href="#" onclick="switchToLogin()">Đăng Nhập</a></p>
+            </div>
+
+            <!-- Forgot Password Form -->
+            <div class="auth-box" id="forgotBox" style="display: none;">
+                <h2>Quên Mật Khẩu</h2>
+                <p>Nhập email của bạn để nhận hướng dẫn đặt lại mật khẩu</p>
+                <form id="forgotForm" onsubmit="handleForgotPassword(event)">
+                    <div class="form-group">
+                        <label for="forgotEmail">Email:</label>
+                        <input type="email" id="forgotEmail" required placeholder="Nhập email của bạn">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Gửi Hướng Dẫn</button>
+                </form>
+                <p class="auth-switch"><a href="#" onclick="switchToLogin()">Quay lại Đăng Nhập</a></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Về Sweet Cake</h4>
+                    <p>Chúng tôi cung cấp những chiếc bánh ngọt tươi ngon, được làm từ những nguyên liệu tốt nhất.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Liên Hệ</h4>
+                    <p>Email: info@sweetcake.vn</p>
+                    <p>Điện thoại: 0123-456-789</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Theo Dõi</h4>
+                    <p>Facebook | Instagram | Twitter</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Sweet Cake. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

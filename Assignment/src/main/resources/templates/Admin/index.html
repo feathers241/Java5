@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Sweet Cake</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        :root {
+            --primary: #8B4513;
+            --secondary: #A0522D;
+            --danger: #dc3545;
+            --success: #28a745;
+            --warning: #ffc107;
+            --info: #17a2b8;
+            --light: #f8f9fa;
+            --dark: #343a40;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f6fa;
+            overflow: hidden;
+        }
+
+        .admin-wrapper {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* ========== SIDEBAR ========== */
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            overflow-y: auto;
+            box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-header {
+            padding: 2rem 1.5rem;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-header p {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 1.5rem 0;
+        }
+
+        .sidebar-menu li {
+            margin: 0;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+            cursor: pointer;
+        }
+
+        .sidebar-menu a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-left-color: #FFD700;
+            padding-left: 2rem;
+        }
+
+        .sidebar-menu a.active {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-left-color: #FFD700;
+            font-weight: 600;
+        }
+
+        .sidebar-menu a span:first-child {
+            width: 25px;
+            text-align: center;
+            margin-right: 1rem;
+            font-size: 1.2rem;
+        }
+
+        /* ========== MAIN CONTENT ========== */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* ========== TOP BAR ========== */
+        .topbar {
+            background: white;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .topbar h1 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin: 0;
+        }
+
+        .topbar-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn-logout {
+            padding: 0.7rem 1.5rem;
+            background-color: var(--danger);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-logout:hover {
+            background-color: #c82333;
+        }
+
+        /* ========== CONTENT AREA ========== */
+        .content-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+
+        .content-area::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .content-area::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .content-area::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        .content-area::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* ========== DASHBOARD CONTENT ========== */
+        .dashboard-section {
+            display: none;
+        }
+
+        .dashboard-section.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ========== STATS CARDS ========== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-card h3 {
+            font-size: 0.85rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        /* ========== CONTENT CARD ========== */
+        .content-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .card-header h2 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin: 0;
+        }
+
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #6B3410;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(139, 69, 19, 0.3);
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            color: white;
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        /* ========== SEARCH & FILTER ========== */
+        .search-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.1);
+        }
+
+        .filter-select {
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            background-color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* ========== TABLE ========== */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .table thead {
+            background-color: #f8f9fa;
+            border-bottom: 2px solid #dee2e6;
+        }
+
+        .table th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: #333;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+
+        .table td {
+            padding: 1rem;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        /* ========== BADGE ========== */
+        .badge {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .badge-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .badge-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .badge-warning {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .badge-info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+
+        /* ========== MODAL ========== */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.show {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            padding: 2rem;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            color: var(--primary);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.3s ease;
+        }
+
+        .close-btn:hover {
+            color: #000;
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .modal-footer {
+            padding: 1.5rem 2rem;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+
+        /* ========== FORM ========== */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            .admin-wrapper {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                max-height: 60px;
+                overflow-x: auto;
+                overflow-y: hidden;
+            }
+
+            .sidebar-header {
+                display: none;
+            }
+
+            .sidebar-menu {
+                display: flex;
+                padding: 0;
+            }
+
+            .sidebar-menu li {
+                flex-shrink: 0;
+            }
+
+            .main-content {
+                height: calc(100vh - 60px);
+            }
+
+            .content-area {
+                padding: 1rem;
+            }
+
+            .card-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .search-bar {
+                flex-direction: column;
+            }
+
+            .search-input,
+            .filter-select {
+                width: 100%;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .table {
+                font-size: 0.9rem;
+            }
+
+            .table th,
+            .table td {
+                padding: 0.7rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ========== EMPTY STATE ========== */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #999;
+        }
+
+        .empty-state svg {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .welcome-section {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 3rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .welcome-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .welcome-section p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-wrapper">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>🍰 Sweet Admin</h2>
+                <p>Admin Panel v1.0</p>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="#" onclick="switchSection(event, 'dashboard')" class="menu-link active" data-section="dashboard">
+                    <span>📊</span>
+                    <span>Bảng Điều Khiển</span>
+                </a></li>
+                <li><a href="#" onclick="switchSection(event, 'categories')" class="menu-link" data-section="categories">
+                    <span>🗂️</span>
+                    <span>Thể Loại</span>
+                </a></li>
+                <li><a href="#" onclick="switchSection(event, 'products')" class="menu-link" data-section="products">
+                    <span>📦</span>
+                    <span>Sản Phẩm</span>
+                </a></li>
+                <li><a href="#" onclick="switchSection(event, 'users')" class="menu-link" data-section="users">
+                    <span>👥</span>
+                    <span>Người Dùng</span>
+                </a></li>
+                <li><a href="#" onclick="switchSection(event, 'orders')" class="menu-link" data-section="orders">
+                    <span>📋</span>
+                    <span>Đơn Hàng</span>
+                </a></li>
+                <li><a href="#" onclick="switchSection(event, 'vouchers')" class="menu-link" data-section="vouchers">
+                    <span>🎟️</span>
+                    <span>Voucher</span>
+                </a></li>
+                <li><a href="#" onclick="switchSection(event, 'reviews')" class="menu-link" data-section="reviews">
+                    <span>⭐</span>
+                    <span>Đánh Giá</span>
+                </a></li>
+            </ul>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <!-- TOP BAR -->
+            <div class="topbar">
+                <h1>Admin Dashboard</h1>
+                <div class="topbar-actions">
+                    <button class="btn-logout" onclick="logout()">🚪 Đăng Xuất</button>
+                </div>
+            </div>
+
+            <!-- CONTENT AREA -->
+            <div class="content-area">
+                <!-- Dashboard Section -->
+                <div id="dashboard" class="dashboard-section active">
+                    <div class="welcome-section">
+                        <h2>Chào mừng đến Sweet Cake Admin Dashboard! 👋</h2>
+                        <p>Quản lý cửa hàng bánh ngọt của bạn một cách hiệu quả</p>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h3>📦 Tổng Sản Phẩm</h3>
+                            <div class="value">45</div>
+                        </div>
+                        <div class="stat-card">
+                            <h3>👥 Tổng Người Dùng</h3>
+                            <div class="value">128</div>
+                        </div>
+                        <div class="stat-card">
+                            <h3>📋 Đơn Hàng Hôm Nay</h3>
+                            <div class="value">12</div>
+                        </div>
+                        <div class="stat-card">
+                            <h3>💰 Doanh Thu Hôm Nay</h3>
+                            <div class="value">2.5M</div>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h2>Tổng Quan Hệ Thống</h2>
+                        </div>
+                        <div style="padding: 2rem; text-align: center; color: #666;">
+                            <p style="font-size: 1.1rem; line-height: 1.8;">
+                                ✨ Sử dụng menu bên trái để quản lý:<br>
+                                🗂️ Thể loại sản phẩm<br>
+                                📦 Danh sách sản phẩm<br>
+                                👥 Tài khoản người dùng<br>
+                                📋 Đơn hàng<br>
+                                🎟️ Mã giảm giá<br>
+                                ⭐ Đánh giá sản phẩm
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Other Sections (placeholder) -->
+                <div id="categories" class="dashboard-section">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h2>📋 Quản Lý Thể Loại</h2>
+                            <button class="btn btn-primary" onclick="loadIframe('categories.html')">+ Thêm Thể Loại</button>
+                        </div>
+                        <iframe src="categories.html" style="width: 100%; height: 600px; border: none; border-radius: 8px;"></iframe>
+                    </div>
+                </div>
+
+                <div id="products" class="dashboard-section">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h2>📦 Quản Lý Sản Phẩm</h2>
+                            <button class="btn btn-primary" onclick="loadIframe('products.html')">+ Thêm Sản Phẩm</button>
+                        </div>
+                        <iframe src="products.html" style="width: 100%; height: 600px; border: none; border-radius: 8px;"></iframe>
+                    </div>
+                </div>
+
+                <div id="users" class="dashboard-section">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h2>👥 Quản Lý Người Dùng</h2>
+                        </div>
+                        <iframe src="users.html" style="width: 100%; height: 600px; border: none; border-radius: 8px;"></iframe>
+                    </div>
+                </div>
+
+                <div id="orders" class="dashboard-section">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h2>📋 Quản Lý Đơn Hàng</h2>
+                        </div>
+                        <iframe src="orders.html" style="width: 100%; height: 600px; border: none; border-radius: 8px;"></iframe>
+                    </div>
+                </div>
+
+                <div id="vouchers" class="dashboard-section">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h2>🎟️ Quản Lý Voucher</h2>
+                            <button class="btn btn-primary" onclick="loadIframe('vouchers.html')">+ Thêm Voucher</button>
+                        </div>
+                        <iframe src="vouchers.html" style="width: 100%; height: 600px; border: none; border-radius: 8px;"></iframe>
+                    </div>
+                </div>
+
+                <div id="reviews" class="dashboard-section">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h2>⭐ Quản Lý Đánh Giá</h2>
+                        </div>
+                        <iframe src="reviews.html" style="width: 100%; height: 600px; border: none; border-radius: 8px;"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchSection(event, sectionId) {
+            event.preventDefault();
+            
+            // Hide all sections
+            const sections = document.querySelectorAll('.dashboard-section');
+            sections.forEach(section => section.classList.remove('active'));
+            
+            // Remove active class from all menu links
+            const menuLinks = document.querySelectorAll('.menu-link');
+            menuLinks.forEach(link => link.classList.remove('active'));
+            
+            // Show selected section and mark menu as active
+            document.getElementById(sectionId).classList.add('active');
+            event.target.closest('a').classList.add('active');
+        }
+
+        function loadIframe(filename) {
+            // Placeholder function
+            console.log('Loading', filename);
+        }
+
+        function logout() {
+            if (confirm('Bạn có chắc chắn muốn đăng xuất?')) {
+                alert('Đăng xuất thành công!');
+                window.location.href = '../User/login.html';
+            }
+        }
+    </script>
+</body>
+</html>

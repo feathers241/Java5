@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sweet Cake - Cửa hàng bánh ngọt</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    
+    <!-- Navigation Bar -->
+	<!-- Navigation Bar -->
+	<nav class="navbar">
+	    <div class="container">
+	        <div class="navbar-brand">
+	            <h1 class="logo">🍰 Sweet Cake</h1>
+	        </div>
+	        <ul class="nav-menu">
+	            <li>
+	                <a th:href="@{/index}" class="active">Trang Chủ</a>
+	            </li>
+	            <li>
+	                <a th:href="@{/products}">Sản Phẩm</a>
+	            </li>
+	            <li>
+	                <a th:href="@{/about}">Giới Thiệu</a>
+	            </li>
+	            <li>
+	                <a th:href="@{/login}" class="auth-btn">Đăng Nhập</a>
+	            </li>
+	            <li>
+	                <a th:href="@{/cart}" class="cart-btn">
+	                    🛒 Giỏ Hàng <span class="cart-count">0</span>
+	                </a>
+	            </li>
+	        </ul>
+	    </div>
+	</nav>
+
+    
+    
+
+    <!-- Main Content Wrapper -->
+    <div class="main-wrapper">
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="hero-content">
+                    <h2>Chào mừng đến Sweet Cake</h2>
+                    <p>Những chiếc bánh ngọt tươi ngon, chất lượng cao</p>
+                    <a href="products.html" class="btn btn-primary">Mua Ngay</a>
+                </div>
+            </section>
+
+            <!-- Featured Products With Sidebar -->
+            <div class="featured-wrapper">
+                <!-- Sidebar -->
+                <aside class="sidebar">
+                    <div class="sidebar-header">
+                        <h3>🗂️ Thể Loại</h3>
+                    </div>
+                    <ul class="category-list">
+                        <li><a th:href="@{/MainProduct}" class="category-btn" data-category="all">📦 Tất Cả Sản Phẩm</a></li>
+                        <li><a href="#" class="category-btn" data-category="cake">🎂 Bánh Kem</a></li>
+                        <li><a href="#" class="category-btn" data-category="donut">🍩 Bánh Donut</a></li>
+                        <li><a href="#" class="category-btn" data-category="cookie">🍪 Bánh Cookie</a></li>
+                        <li><a href="#" class="category-btn" data-category="tart">🥧 Bánh Tart</a></li>
+                        <li><a href="#" class="category-btn" data-category="brownie">🍫 Bánh Brownie</a></li>
+                        <li><a href="#" class="category-btn" data-category="croissant">🥐 Bánh Croissant</a></li>
+                        <li><a href="#" class="category-btn" data-category="cheesecake">🧀 Bánh Cheesecake</a></li>
+                        <li><a href="#" class="category-btn" data-category="macaron">🎀 Bánh Macaron</a></li>
+                        <li><a href="#" class="category-btn" data-category="cupcake">🧁 Bánh Cupcake</a></li>
+                        <li><a href="#" class="category-btn" data-category="muffin">🥨 Bánh Muffin</a></li>
+                    </ul>
+                    <div class="sidebar-header">
+                        <h3>Vouchers</h3>
+                    </div>
+                    <ul class="category-list">
+                        <li><a th:href="@{/voucher}" class="category-btn" data-category="all">📦 Tất Cả voucher</a></li>
+                        <li><a href="#" class="category-btn" data-category="cake">🎂 BAKE10</a></li>
+                        <li><a href="#" class="category-btn" data-category="donut">🍩 SWEET20</a></li>
+                        <li><a href="#" class="category-btn" data-category="cookie">🍪 FRESH30</a></li>
+                        <li><a href="#" class="category-btn" data-category="tart">🥧 NEWUSER15</a></li>
+                        <li><a href="#" class="category-btn" data-category="brownie">🍫 VIP50</a></li>
+                    </ul>
+                    <div class="sidebar-header">
+                        <h3>🗂️ Thể Loại</h3>
+                    </div>
+                    <ul class="category-list">
+                        <li><a href="#" class="category-btn" data-category="all">📦 Tất Cả Sản Phẩm</a></li>
+                        <li><a href="#" class="category-btn" data-category="cake">🎂 Bánh Kem</a></li>
+                        <li><a href="#" class="category-btn" data-category="donut">🍩 Bánh Donut</a></li>
+                        <li><a href="#" class="category-btn" data-category="cookie">🍪 Bánh Cookie</a></li>
+                        <li><a href="#" class="category-btn" data-category="tart">🥧 Bánh Tart</a></li>
+                        <li><a href="#" class="category-btn" data-category="brownie">🍫 Bánh Brownie</a></li>
+                        <li><a href="#" class="category-btn" data-category="croissant">🥐 Bánh Croissant</a></li>
+                        <li><a href="#" class="category-btn" data-category="cheesecake">🧀 Bánh Cheesecake</a></li>
+                        <li><a href="#" class="category-btn" data-category="macaron">🎀 Bánh Macaron</a></li>
+                        <li><a href="#" class="category-btn" data-category="cupcake">🧁 Bánh Cupcake</a></li>
+                        <li><a href="#" class="category-btn" data-category="muffin">🥨 Bánh Muffin</a></li>
+                    </ul>
+                </aside>
+				<section class="featured">
+					<div th:switch="${view}">
+
+					       <div th:case="'MainProduct'"
+					            th:replace="MainProduct :: content"></div>
+
+					       <div th:case="'voucher'"
+					            th:replace="voucher :: content"></div>
+
+					   </div>
+				</section>
+
+
+            <!-- Promotions Section -->
+            <section class="promotions">
+                <div class="container">
+                    <div class="promo-box">
+                        <h3>🎉 Khuyến Mãi Đặc Biệt</h3>
+                        <p>Giảm 20% cho đơn hàng đầu tiên</p>
+                        <code class="promo-code">WELCOME20</code>
+                    </div>
+                    <div class="promo-box">
+                        <h3>🚚 Miễn Phí Giao Hàng</h3>
+                        <p>Cho đơn hàng từ 500.000đ</p>
+                    </div>
+                    <div class="promo-box">
+                        <h3>⭐ Hàng Chất Lượng</h3>
+                        <p>Đảm bảo 100% hàng chính hãng</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+</body>
+<footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Về Sweet Cake</h4>
+                    <p>Chúng tôi cung cấp những chiếc bánh ngọt tươi ngon, được làm từ những nguyên liệu tốt nhất.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Liên Hệ</h4>
+                    <p>Email: info@sweetcake.vn</p>
+                    <p>Điện thoại: 0123-456-789</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Theo Dõi</h4>
+                    <p>Facebook | Instagram | Twitter</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Sweet Cake. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</html>

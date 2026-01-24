@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ Hàng - Sweet Cake</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <!-- Navigation Bar -->
+	<nav class="navbar">
+		    <div class="container">
+		        <div class="navbar-brand">
+		            <h1 class="logo">🍰 Sweet Cake</h1>
+		        </div>
+		        <ul class="nav-menu">
+		            <li>
+		                <a th:href="@{/index}" class="active">Trang Chủ</a>
+		            </li>
+		            <li>
+		                <a th:href="@{/products}">Sản Phẩm</a>
+		            </li>
+		            <li>
+		                <a th:href="@{/about}">Giới Thiệu</a>
+		            </li>
+		            <li>
+		                <a th:href="@{/login}" class="auth-btn">Đăng Nhập</a>
+		            </li>
+		            <li>
+		                <a th:href="@{/cart}" class="cart-btn">
+		                    🛒 Giỏ Hàng <span class="cart-count">0</span>
+		                </a>
+		            </li>
+		        </ul>
+		    </div>
+		</nav>
+
+    <!-- Cart Section -->
+    <section class="cart-page">
+        <div class="container">
+            <h1>Giỏ Hàng Của Bạn</h1>
+
+            <div class="cart-content">
+                <!-- Cart Items -->
+                <div class="cart-items">
+                    <table class="cart-table" id="cartTable">
+                        <thead>
+                            <tr>
+                                <th>Sản Phẩm</th>
+                                <th>Giá</th>
+                                <th>Số Lượng</th>
+                                <th>Tổng</th>
+                                <th>Hành Động</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cartItemsBody">
+                            <!-- Cart items will be loaded here -->
+                        </tbody>
+                    </table>
+                    <div id="emptyCart" class="empty-cart">
+                        <p>Giỏ hàng của bạn trống</p>
+                        <a href="products.html" class="btn btn-primary">Tiếp Tục Mua Sắm</a>
+                    </div>
+                </div>
+
+                <!-- Cart Summary -->
+                <div class="cart-summary">
+                    <h2>Tóm Tắt Đơn Hàng</h2>
+                    <div class="summary-item">
+                        <span>Tổng tiền hàng:</span>
+                        <span id="subtotal">0đ</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Phí vận chuyển:</span>
+                        <span id="shipping">0đ</span>
+                    </div>
+                    <div class="summary-item promo">
+                        <input type="text" id="promoCode" placeholder="Nhập mã khuyến mãi">
+                        <button onclick="applyPromo()" class="btn btn-small">Áp Dụng</button>
+                    </div>
+                    <div class="summary-item discount" id="discountSection" style="display:none;">
+                        <span>Giảm giá:</span>
+                        <span id="discount">0đ</span>
+                    </div>
+                    <div class="summary-total">
+                        <span>Tổng cộng:</span>
+                        <span id="total">0đ</span>
+                    </div>
+                    <button onclick="checkout()" class="btn btn-primary btn-block">Thanh Toán</button>
+                    <a href="products.html" class="btn btn-secondary btn-block">Tiếp Tục Mua Sắm</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Về Sweet Cake</h4>
+                    <p>Chúng tôi cung cấp những chiếc bánh ngọt tươi ngon, được làm từ những nguyên liệu tốt nhất.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Liên Hệ</h4>
+                    <p>Email: info@sweetcake.vn</p>
+                    <p>Điện thoại: 0123-456-789</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Theo Dõi</h4>
+                    <p>Facebook | Instagram | Twitter</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Sweet Cake. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script src="js/cart.js"></script>
+</body>
+</html>

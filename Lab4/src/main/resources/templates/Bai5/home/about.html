@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/Bai5/shared/layout::view(~{::title}, ~{::article})}">
+<head>
+    <title>Giới thiệu</title>
+</head>
+<body>
+    <article>
+        <h1  th:text="#{menu.about}">Giới thiệu</h1>
+        <ul>
+            <li>FPT Polytechnic</li>
+            <li>Thực học – Thực nghiệp</li>
+        </ul>
+    </article>
+</body>
+</html>

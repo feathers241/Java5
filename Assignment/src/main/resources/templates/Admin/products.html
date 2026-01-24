@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Sản Phẩm</title>
+    <script src="js/storage.js"></script>
+    <style>
+        :root {
+            --primary: #8B4513;
+            --secondary: #A0522D;
+            --danger: #dc3545;
+            --success: #28a745;
+            --warning: #ffc107;
+            --info: #17a2b8;
+            --light: #f8f9fa;
+            --dark: #343a40;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f6fa;
+        }
+
+        .container {
+            padding: 1.5rem;
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .search-input,
+        .filter-select {
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.95rem;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #6B3410;
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            color: white;
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .table thead {
+            background-color: #f8f9fa;
+            border-bottom: 2px solid #dee2e6;
+        }
+
+        .table th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: #333;
+            font-size: 0.9rem;
+        }
+
+        .table td {
+            padding: 1rem;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.3rem 0.7rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .badge-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            overflow-y: auto;
+        }
+
+        .modal.show {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 2rem;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 600px;
+        }
+
+        .modal-header {
+            padding: 2rem;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            color: var(--primary);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-family: inherit;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .modal-footer {
+            padding: 1.5rem 2rem;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="search-bar">
+            <input type="text" id="searchInput" class="search-input" placeholder="🔍 Tìm kiếm sản phẩm...">
+            <select id="categoryFilter" class="filter-select">
+                <option value="">📂 Tất cả thể loại</option>
+            </select>
+            <button class="btn btn-primary" onclick="openProductModal()">➕ Thêm Sản Phẩm</button>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tên Sản Phẩm</th>
+                    <th>Thể Loại</th>
+                    <th>Giá (VND)</th>
+                    <th>Số Lượng</th>
+                    <th>Trạng Thái</th>
+                    <th>Hành Động</th>
+                </tr>
+            </thead>
+            <tbody id="productsTableBody">
+                <tr><td colspan="7" class="empty-state">Đang tải dữ liệu...</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Product Modal -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Thêm Sản Phẩm</h2>
+                <button class="close-btn" onclick="closeProductModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="productForm">
+                    <div class="form-group">
+                        <label for="productName">Tên Sản Phẩm</label>
+                        <input type="text" id="productName" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="productCategory">Thể Loại</label>
+                            <select id="productCategory" required></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="productPrice">Giá (VND)</label>
+                            <input type="number" id="productPrice" min="0" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="productQuantity">Số Lượng</label>
+                            <input type="number" id="productQuantity" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="productStatus">Trạng Thái</label>
+                            <select id="productStatus">
+                                <option value="active">Hoạt Động</option>
+                                <option value="inactive">Không Hoạt Động</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="productDescription">Mô Tả</label>
+                        <textarea id="productDescription"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" onclick="closeProductModal()">Hủy</button>
+                <button class="btn btn-success" onclick="saveProduct()">Lưu</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentEditingId = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            StorageManager.initialize();
+            loadCategories();
+            loadProducts();
+            document.getElementById('searchInput').addEventListener('input', filterTable);
+            document.getElementById('categoryFilter').addEventListener('change', filterTable);
+        });
+
+        function loadCategories() {
+            const categories = StorageManager.getAll('categories');
+            const categorySelect = document.getElementById('productCategory');
+            const categoryFilter = document.getElementById('categoryFilter');
+            
+            categorySelect.innerHTML = categories.map(cat => 
+                `<option value="${cat.id}">${cat.name}</option>`
+            ).join('');
+
+            categoryFilter.innerHTML = '<option value="">📂 Tất cả thể loại</option>' + 
+                categories.map(cat => 
+                    `<option value="${cat.id}">${cat.name}</option>`
+                ).join('');
+        }
+
+        function loadProducts() {
+            const products = StorageManager.getAll('products');
+            const tbody = document.getElementById('productsTableBody');
+            
+            if (products.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" class="empty-state">Chưa có sản phẩm nào</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = products.map(product => {
+                const category = StorageManager.getById('categories', product.category);
+                const categoryName = category ? category.name : 'N/A';
+                const statusBadge = product.quantity > 0 
+                    ? `<span class="badge badge-success">✓ Còn Hàng</span>`
+                    : `<span class="badge badge-danger">✗ Hết Hàng</span>`;
+
+                return `
+                    <tr>
+                        <td>#${String(product.id).padStart(3, '0')}</td>
+                        <td>${product.name}</td>
+                        <td>${categoryName}</td>
+                        <td>${product.price.toLocaleString('vi-VN')}</td>
+                        <td>${product.quantity}</td>
+                        <td>${statusBadge}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-success" onclick="editProduct(${product.id})">✏️ Sửa</button>
+                                <button class="btn btn-danger" onclick="deleteProduct(${product.id})">🗑️ Xóa</button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function filterTable() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const categoryFilter = document.getElementById('categoryFilter').value;
+            const rows = document.querySelectorAll('#productsTableBody tr');
+            
+            rows.forEach(row => {
+                if (row.cells.length === 7) {
+                    const text = row.textContent.toLowerCase();
+                    const matchesSearch = text.includes(searchTerm);
+                    const matchesCategory = !categoryFilter || row.cells[2].textContent.includes(
+                        StorageManager.getById('categories', categoryFilter)?.name || ''
+                    );
+                    row.style.display = (matchesSearch && matchesCategory) ? '' : 'none';
+                }
+            });
+        }
+
+        function openProductModal() {
+            currentEditingId = null;
+            document.getElementById('modalTitle').textContent = 'Thêm Sản Phẩm';
+            document.getElementById('productForm').reset();
+            document.getElementById('productModal').classList.add('show');
+        }
+
+        function closeProductModal() {
+            document.getElementById('productModal').classList.remove('show');
+        }
+
+        function editProduct(id) {
+            const product = StorageManager.getById('products', id);
+            if (product) {
+                currentEditingId = id;
+                document.getElementById('modalTitle').textContent = 'Chỉnh Sửa Sản Phẩm';
+                document.getElementById('productName').value = product.name;
+                document.getElementById('productCategory').value = product.category;
+                document.getElementById('productPrice').value = product.price;
+                document.getElementById('productQuantity').value = product.quantity;
+                document.getElementById('productStatus').value = product.status;
+                document.getElementById('productDescription').value = product.description || '';
+                document.getElementById('productModal').classList.add('show');
+            }
+        }
+
+        function saveProduct() {
+            const name = document.getElementById('productName').value.trim();
+            const category = parseInt(document.getElementById('productCategory').value);
+            const price = parseFloat(document.getElementById('productPrice').value);
+            const quantity = parseInt(document.getElementById('productQuantity').value);
+            const status = document.getElementById('productStatus').value;
+            const description = document.getElementById('productDescription').value.trim();
+
+            if (!name || !category || !price || quantity === '') {
+                alert('Vui lòng điền đầy đủ thông tin bắt buộc');
+                return;
+            }
+
+            const data = { name, category, price, quantity, status, description };
+
+            if (currentEditingId) {
+                StorageManager.update('products', currentEditingId, data);
+                alert('Cập nhật sản phẩm thành công');
+            } else {
+                StorageManager.add('products', data);
+                alert('Thêm sản phẩm thành công');
+            }
+
+            closeProductModal();
+            loadProducts();
+        }
+
+        function deleteProduct(id) {
+            if (confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')) {
+                StorageManager.delete('products', id);
+                alert('Xóa sản phẩm thành công');
+                loadProducts();
+            }
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('productModal');
+            if (event.target == modal) {
+                closeProductModal();
+            }
+        }
+    </script>
+</body>
+</html>

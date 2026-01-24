@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giới Thiệu - Sweet Cake</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <!-- Navigation Bar -->
+	<nav class="navbar">
+		    <div class="container">
+		        <div class="navbar-brand">
+		            <h1 class="logo">🍰 Sweet Cake</h1>
+		        </div>
+		        <ul class="nav-menu">
+		            <li>
+		                <a th:href="@{/index}" class="active">Trang Chủ</a>
+		            </li>
+		            <li>
+		                <a th:href="@{/products}">Sản Phẩm</a>
+		            </li>
+		            <li>
+		                <a th:href="@{/about}">Giới Thiệu</a>
+		            </li>
+		            <li>
+		                <a th:href="@{/login}" class="auth-btn">Đăng Nhập</a>
+		            </li>
+		            <li>
+		                <a th:href="@{/cart}" class="cart-btn">
+		                    🛒 Giỏ Hàng <span class="cart-count">0</span>
+		                </a>
+		            </li>
+		        </ul>
+		    </div>
+		</nav>
+
+    <!-- About Section -->
+    <section class="about-page">
+        <div class="container">
+            <!-- About Us -->
+            <section class="about-section">
+                <h1>Về Sweet Cake</h1>
+                <div class="about-content">
+                    <div class="about-text">
+                        <h2>Chúng Tôi Là Ai?</h2>
+                        <p>Sweet Cake là một cửa hàng bánh ngọt trực tuyến hàng đầu, chuyên cung cấp các sản phẩm bánh tươi ngon, được làm từ những nguyên liệu tốt nhất. Với hơn 10 năm kinh nghiệm trong lĩnh vực sản xuất bánh, chúng tôi tự hào mang đến cho bạn những chiếc bánh có chất lượng cao nhất.</p>
+                        <p>Chúng tôi cam kết sử dụng chỉ những nguyên liệu tự nhiên, không chứa chất bảo quản nhân tạo, đảm bảo an toàn cho sức khỏe của bạn và gia đình.</p>
+                    </div>
+                    <div class="about-image">
+                        <div class="image-placeholder">🍰</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Mission & Vision -->
+            <section class="mission-vision">
+                <div class="mission-box">
+                    <h3>Sứ Mệnh</h3>
+                    <p>Cung cấp những sản phẩm bánh ngọt chất lượng cao, tươi ngon, giá cả hợp lý để mang vui vẻ, hạnh phúc đến mọi gia đình Việt Nam.</p>
+                </div>
+                <div class="vision-box">
+                    <h3>Tầm Nhìn</h3>
+                    <p>Trở thành thương hiệu bánh ngọt uy tín hàng đầu Việt Nam, được yêu thích bởi hàng triệu khách hàng.</p>
+                </div>
+            </section>
+
+            <!-- Features -->
+            <section class="features-section">
+                <h2>Tại Sao Chọn Sweet Cake?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🥘</div>
+                        <h3>Nguyên Liệu Tốt</h3>
+                        <p>Sử dụng nguyên liệu nhập khẩu cao cấp từ các nước hàng đầu thế giới</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">👨‍🍳</div>
+                        <h3>Đội Ngũ Chuyên Nghiệp</h3>
+                        <p>Các đầu bếp có kinh nghiệm, được đào tạo bài bản tại các trường ngoài nước</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🚚</div>
+                        <h3>Giao Hàng Nhanh</h3>
+                        <p>Giao hàng trong vòng 24 giờ ở Hà Nội, miễn phí vận chuyển cho đơn từ 500k</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">✅</div>
+                        <h3>Chất Lượng Đảm Bảo</h3>
+                        <p>100% sản phẩm chính hãng, có giấy chứng nhận vệ sinh an toàn</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💳</div>
+                        <h3>Thanh Toán An Toàn</h3>
+                        <p>Hỗ trợ nhiều phương thức thanh toán, bảo mật thông tin khách hàng 100%</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🤝</div>
+                        <h3>Hỗ Trợ Khách Hàng</h3>
+                        <p>Đội ngũ chăm sóc khách hàng 24/7, sẵn sàng giải đáp mọi thắc mắc</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Team Section -->
+            <section class="team-section">
+                <h2>Đội Ngũ Của Chúng Tôi</h2>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <div class="member-avatar">👨</div>
+                        <h3>Nguyễn Văn A</h3>
+                        <p class="member-role">Giám Đốc Điều Hành</p>
+                        <p class="member-bio">Có 15 năm kinh nghiệm trong ngành sản xuất bánh</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-avatar">👩</div>
+                        <h3>Trần Thị B</h3>
+                        <p class="member-role">Đầu Bếp Trưởng</p>
+                        <p class="member-bio">Tốt nghiệp Trường Bếp Quốc Tế, đã tham gia nhiều cuộc thi bánh quốc tế</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-avatar">👨</div>
+                        <h3>Lê Minh C</h3>
+                        <p class="member-role">Trưởng Phòng Kiếm Soát Chất Lượng</p>
+                        <p class="member-bio">Đảm bảo mọi sản phẩm đều đạt tiêu chuẩn chất lượng cao nhất</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section class="contact-section">
+                <h2>Liên Hệ Với Chúng Tôi</h2>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <h3>📍 Địa Chỉ</h3>
+                        <p>123 Đường Giải Phóng, Quận Đống Đa, Hà Nội</p>
+                    </div>
+                    <div class="contact-item">
+                        <h3>📞 Điện Thoại</h3>
+                        <p>0123-456-789</p>
+                    </div>
+                    <div class="contact-item">
+                        <h3>📧 Email</h3>
+                        <p>info@sweetcake.vn</p>
+                    </div>
+                    <div class="contact-item">
+                        <h3>🕒 Giờ Làm Việc</h3>
+                        <p>Thứ 2 - Chủ Nhật: 8:00 AM - 10:00 PM</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Về Sweet Cake</h4>
+                    <p>Chúng tôi cung cấp những chiếc bánh ngọt tươi ngon, được làm từ những nguyên liệu tốt nhất.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Liên Hệ</h4>
+                    <p>Email: info@sweetcake.vn</p>
+                    <p>Điện thoại: 0123-456-789</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Theo Dõi</h4>
+                    <p>Facebook | Instagram | Twitter</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Sweet Cake. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

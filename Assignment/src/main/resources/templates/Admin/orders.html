@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Đơn Hàng</title>
+    <script src="js/storage.js"></script>
+    <style>
+        :root {
+            --primary: #8B4513;
+            --secondary: #A0522D;
+            --danger: #dc3545;
+            --success: #28a745;
+            --warning: #ffc107;
+            --info: #17a2b8;
+            --light: #f8f9fa;
+            --dark: #343a40;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f6fa;
+        }
+
+        .container {
+            padding: 1.5rem;
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .search-input,
+        .filter-select {
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.95rem;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            color: white;
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .table thead {
+            background-color: #f8f9fa;
+            border-bottom: 2px solid #dee2e6;
+        }
+
+        .table th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: #333;
+            font-size: 0.9rem;
+        }
+
+        .table td {
+            padding: 1rem;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.3rem 0.7rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .badge-warning {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .badge-info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .badge-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal.show {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .modal-header {
+            padding: 2rem;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            color: var(--primary);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .info-row {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .info-row label {
+            font-weight: 600;
+            color: #666;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-row p {
+            margin: 0;
+            color: #333;
+            font-size: 1rem;
+        }
+
+        .modal-footer {
+            padding: 1.5rem 2rem;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="search-bar">
+            <input type="text" id="searchInput" class="search-input" placeholder="🔍 Tìm kiếm mã đơn hàng...">
+            <select id="statusFilter" class="filter-select">
+                <option value="">📊 Tất cả trạng thái</option>
+                <option value="pending">⏳ Chờ Xử Lý</option>
+                <option value="processing">🔄 Đang Xử Lý</option>
+                <option value="delivered">✓ Đã Giao</option>
+            </select>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Mã Đơn Hàng</th>
+                    <th>Khách Hàng</th>
+                    <th>Số Tiền (VND)</th>
+                    <th>Ngày Tạo</th>
+                    <th>Trạng Thái</th>
+                    <th>Hành Động</th>
+                </tr>
+            </thead>
+            <tbody id="ordersTableBody">
+                <tr><td colspan="7" class="empty-state">Đang tải dữ liệu...</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Order Detail Modal -->
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Chi Tiết Đơn Hàng</h2>
+                <button class="close-btn" onclick="closeOrderModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="info-row">
+                    <label>ID</label>
+                    <p id="orderDetailId"></p>
+                </div>
+                <div class="info-row">
+                    <label>Mã Đơn Hàng</label>
+                    <p id="orderDetailCode"></p>
+                </div>
+                <div class="info-row">
+                    <label>Khách Hàng</label>
+                    <p id="orderDetailCustomer"></p>
+                </div>
+                <div class="info-row">
+                    <label>Số Tiền</label>
+                    <p id="orderDetailAmount"></p>
+                </div>
+                <div class="info-row">
+                    <label>Ngày Tạo</label>
+                    <p id="orderDetailDate"></p>
+                </div>
+                <div class="info-row">
+                    <label>Trạng Thái</label>
+                    <p id="orderDetailStatus"></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" onclick="closeOrderModal()">Đóng</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentOrderId = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            StorageManager.initialize();
+            loadOrders();
+            document.getElementById('searchInput').addEventListener('input', filterTable);
+            document.getElementById('statusFilter').addEventListener('change', filterTable);
+        });
+
+        function getStatusBadge(status) {
+            const badges = {
+                'pending': '<span class="badge badge-warning">⏳ Chờ Xử Lý</span>',
+                'processing': '<span class="badge badge-info">🔄 Đang Xử Lý</span>',
+                'delivered': '<span class="badge badge-success">✓ Đã Giao</span>'
+            };
+            return badges[status] || '<span class="badge badge-warning">Không Xác Định</span>';
+        }
+
+        function loadOrders() {
+            const orders = StorageManager.getAll('orders');
+            const tbody = document.getElementById('ordersTableBody');
+            
+            if (orders.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" class="empty-state">Chưa có đơn hàng nào</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = orders.map(order => `
+                <tr>
+                    <td>#${String(order.id).padStart(3, '0')}</td>
+                    <td>${order.code}</td>
+                    <td>${order.customer}</td>
+                    <td>${order.amount.toLocaleString('vi-VN')}</td>
+                    <td>${order.dateCreated}</td>
+                    <td>${getStatusBadge(order.status)}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn btn-secondary" onclick="viewOrder(${order.id})">👁️ Xem</button>
+                            <button class="btn btn-success" onclick="approveOrder(${order.id})">✓ Duyệt</button>
+                            <button class="btn btn-danger" onclick="cancelOrder(${order.id})">✗ Huỷ</button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function filterTable() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const statusFilter = document.getElementById('statusFilter').value;
+            const rows = document.querySelectorAll('#ordersTableBody tr');
+            
+            rows.forEach(row => {
+                if (row.cells.length === 7) {
+                    const text = row.textContent.toLowerCase();
+                    const matchesSearch = text.includes(searchTerm);
+                    const matchesStatus = !statusFilter || text.includes(statusFilter);
+                    row.style.display = (matchesSearch && matchesStatus) ? '' : 'none';
+                }
+            });
+        }
+
+        function viewOrder(id) {
+            const order = StorageManager.getById('orders', id);
+            if (order) {
+                currentOrderId = id;
+                document.getElementById('orderDetailId').textContent = '#' + String(order.id).padStart(3, '0');
+                document.getElementById('orderDetailCode').textContent = order.code;
+                document.getElementById('orderDetailCustomer').textContent = order.customer;
+                document.getElementById('orderDetailAmount').textContent = order.amount.toLocaleString('vi-VN') + ' VND';
+                document.getElementById('orderDetailDate').textContent = order.dateCreated;
+                
+                const statusText = {
+                    'pending': '⏳ Chờ Xử Lý',
+                    'processing': '🔄 Đang Xử Lý',
+                    'delivered': '✓ Đã Giao'
+                }[order.status] || 'Không Xác Định';
+                document.getElementById('orderDetailStatus').textContent = statusText;
+                
+                document.getElementById('orderModal').classList.add('show');
+            }
+        }
+
+        function closeOrderModal() {
+            document.getElementById('orderModal').classList.remove('show');
+        }
+
+        function approveOrder(id) {
+            const order = StorageManager.getById('orders', id);
+            if (order) {
+                let nextStatus = 'processing';
+                if (order.status === 'processing') {
+                    nextStatus = 'delivered';
+                }
+                StorageManager.update('orders', id, { status: nextStatus });
+                alert('Cập nhật trạng thái đơn hàng thành công');
+                loadOrders();
+            }
+        }
+
+        function cancelOrder(id) {
+            if (confirm('Bạn có chắc chắn muốn huỷ đơn hàng này?')) {
+                StorageManager.delete('orders', id);
+                alert('Huỷ đơn hàng thành công');
+                loadOrders();
+            }
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('orderModal');
+            if (event.target == modal) {
+                closeOrderModal();
+            }
+        }
+    </script>
+</body>
+</html>
