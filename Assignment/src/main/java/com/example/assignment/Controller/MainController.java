@@ -9,7 +9,7 @@ public class MainController {
 	
 	@GetMapping({"/", "/index"})
     public String home(Model model) {
-		 model.addAttribute("view", "MainProduct");
+//		model.addAttribute("content", "User/MainProduct :: content");
         return "User/index";
     }
 
@@ -34,14 +34,16 @@ public class MainController {
     }
     @GetMapping("/MainProduct")
     public String product(Model model) {
-        model.addAttribute("view", "MainProduct");
-        return "User/index";
+        return "User/MainProduct";
     }
 
     @GetMapping("/voucher")
     public String voucher(Model model) {
-        model.addAttribute("view", "voucher");
-        return "User/index";
+        return "User/voucher";
+    }
+    @GetMapping("/Admin/index")
+    public String adminidex() {
+    	return "Admin/index";
     }
 
 }
