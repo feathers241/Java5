@@ -1,0 +1,109 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>Document</title>
+<Style>
+.bg-chan {
+	background-color: #f2f2f2; /* Màu xám nhạt cho dòng chẵn */
+}
+
+.bg-le {
+	background-color: #ffffff; /* Màu trắng cho dòng lẻ */
+}
+</Style>
+</head>
+<body>
+		<h2 th:text="'Hello World !'"></h2>
+		<h2 th:text="|New Year ${year}|"></h2>
+
+		<!-- Biến cục bộ -->
+		<div th:with="fullName=|Anh Tuấn|">
+			<p>
+				Xin chào, <span th:text="${fullName}">Tên người dùng</span>!
+			</p>
+		</div>
+		
+		<div th:with="userName=| anh ${name}|">
+			<p>
+				Xin chào, <span th:text="${userName}">Tên người dùng</span>!
+			</p>
+		</div>
+		
+		<!-- if/unless -->
+		<div th:with="n=26">
+			<p th:if="${n}" th:text="|n = ${n}|"></p>
+    		<p th:unless="${n}" th:text="|Chưa nhập n !|"></p>
+			
+			<!-- <p th:text="${n != null ? 'n = ' + n : 'Chưa nhập n!'}"></p> -->
+			
+			<div th:if="${n!=null}">
+				<p th:if="${n%2==0}" th:text="|${n} là số chẵn|"></p>
+				<p th:unless="${n%2==0}" th:text="|${n} là số lẻ|"></p>
+			</div>
+		</div>
+
+		<!-- switch / case -->
+		<div th:with="tuoi=15">
+			<div th:switch="true">
+				<p th:case="${tuoi <= 16}">Thiếu niên</p>
+				<p th:case="${tuoi < 45}">Thanh niên</p>
+				<p th:case="${tuoi <= 60}">Trung niên</p>
+				<p th:case="*">Người cao tuổi</p>
+			</div>
+		</div>
+
+		<div th:with="role='admin'">
+			<div th:switch="${role}">
+				<p th:case="'admin'">Chào sếp!</p>
+				<p th:case="'user'">Chào người dùng!</p>
+				<p th:case="*">Chào khách lạ! (Đây là giá trị mặc định)</p>
+			</div>
+		</div>
+
+		<!-- loop -->
+		<table border="1">
+			<tr>
+				<th>STT</th>
+				<th>Tên</th>
+				<th>Trạng thái</th>
+			</tr>
+			<tr th:each="user, iterStat : ${users}"
+				th:classappend="${iterStat.even} ? 'bg-chan' : 'bg-le'">
+				<td th:text="${iterStat.count}">1</td>
+				<td th:text="${user.username}">Admin</td>
+				<td><span th:if="${iterStat.first}">Đầu danh sách </span> <span
+					th:if="${iterStat.last}">Cuối danh sách </span> <span
+					th:if="${iterStat.even}">Dòng chẵn</span> <span
+					th:if="${iterStat.odd}">Dòng lẻ</span></td>
+			</tr>
+		</table>
+		
+		<br>
+		<table border="1">
+			<tr>
+				<th>STT</th>
+				<th>Tên</th>
+				<th>Trạng thái</th>
+			</tr>
+			<tr th:each="user, iterStat : ${users}"
+				th:style="${iterStat.even} ? 'background-color: #f2f2ff;' : 'background-color: white;'">
+				<td th:text="${iterStat.count}">1</td>
+				<td th:text="${user.username}">Admin</td>
+				<td><span th:if="${iterStat.first}">Đầu danh sách</span> <span
+					th:if="${iterStat.last}">Cuối danh sách</span> <span
+					th:if="${iterStat.even}">Dòng chẵn</span> <span
+					th:if="${iterStat.odd}">Dòng lẻ</span></td>
+			</tr>
+		</table>
+		
+		<br>
+		<div th:each="i : ${#numbers.sequence(1, 5)}">
+			<th:block th:text="|Đây là dòng thứ ${i}|"></th:block>
+		</div>
+		<br>
+		
+		
+</body>
+
+</html>

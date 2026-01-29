@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello</title>
+</head>
+<body>
+	<form action = "/Bai3/submit" method = "post" enctype = "multipart/form-data">
+		<input name="username" th:value = "${us}"> 
+		<input name="password" th:value = "${pw}"><br/>
+		Chọn ảnh đại diện : <input type = "file" name = "pic"/><br/>
+		<input type="checkbox" name="remember" value="true" th:checked = "${re}"> Nhớ mặt tôi ?<br/>
+		<button>Login</button> 
+	</form>
+	<img th:if="${img}" th:src="@{'/Bai3/images/' + ${img}}" width="150">
+	<h1 th:text = "${mess}"></h1> 
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello</title>
+</head>
+<body>
+	<form action = "/Bai2/submit" method = "post">
+		<input name="username" th:value = "${us}"> 
+		<input name="password" th:value = "${pw}"><br/>
+		<input type="checkbox" name="remember" value="true" th:checked = "${re}"> Nhớ mặt tôi ?<br/>
+		<button>Login</button> 
+	</form>
+	<h1 th:text = "${mess}"></h1> 
+</body>
+</html>
