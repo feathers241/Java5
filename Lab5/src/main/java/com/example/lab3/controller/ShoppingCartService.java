@@ -9,11 +9,12 @@ import com.example.lab3.bai1.ParamService;
 import com.example.lab3.entity.Item;
 
 public interface ShoppingCartService {
-		void addItems(int a);
-		void remove(Integer id); 
-		Item update(int a, int quty);
-		void clear();
-		Collection<Item> getItems();
-		int getCount();
-		double getAmout();
+    Item add(Integer id);
+    void remove(Integer id);
+    Item update(Integer id, int qty);
+    void clear();
+    Collection<Item> getItems();
+    int getCount();
+    double getAmount();
 }
+
