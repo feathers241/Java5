@@ -7,9 +7,8 @@
 <body>
 	<ul> 
 	<th:block th:each="item: ${items}"> 
-		<li th:text="${item.name + ', ' + item.price}">
-		    [<a>Add To Cart</a>]
-		</li>
+		<li th:text="${item.name + ', ' + item.price}"></li>		<a th:href="@{|/Bai5/add/${item.id}|}">Add To Cart</a>
+
 	</th:block> 
 	</ul> 
 </body>

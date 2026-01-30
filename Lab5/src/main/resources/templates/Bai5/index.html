@@ -15,7 +15,7 @@
 	    <th></th>
 	</tr>
 
-	<form th:each="item : ${cart}"
+	<form th:each="item : ${cart.items}"
 	      th:action="@{|/Bai5/update/${item.id}|}"
 	      method="post">
 
@@ -30,15 +30,15 @@
 	    </td>
 	    <td th:text="${item.price * item.qty}"></td>
 	    <td>
-	        <a th:href="@{|/Bai5/remove/${item.id}|}">Remove</a>
+	        <a th:href="@{|/Bai5/remove/${item.id}|}">Remove</a> ||
+			<a th:href="@{|/Bai5/add/${item.id}|}">Add more</a>
 	    </td>
 	</tr>
 
 	</form>
 	</table>
-
 	<a href="/Bai5/clear">Clear Cart</a> |
-	<a href="/Bai5/add">Add more</a>
+
 
 
 </body>
