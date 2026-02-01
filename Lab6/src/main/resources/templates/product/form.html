@@ -1,0 +1,70 @@
+<form method="post" th:object="${item}">
+
+    <!-- ID (ẩn) -->
+    <input type="hidden" th:field="*{id}" />
+
+    <div>
+        <label>Product Name</label><br>
+        <input th:field="*{productName}" placeholder="Enter product name"/>
+    </div>
+
+    <div>
+        <label>Price</label><br>
+        <input type="number" step="0.01" th:field="*{price}" placeholder="Enter price"/>
+    </div>
+
+    <div>
+        <label>Quantity</label><br>
+        <input type="number" th:field="*{quantity}" placeholder="Enter quantity"/>
+    </div>
+
+    <div>
+        <label>Category ID</label><br>
+        <input type="number" th:field="*{categoryID}" placeholder="Category ID"/>
+    </div>
+
+    <div>
+        <label>Image</label><br>
+        <input th:field="*{image}" placeholder="image.jpg"/>
+    </div>
+
+    <div>
+        <label>Description</label><br>
+        <textarea th:field="*{description}" placeholder="Short description"></textarea>
+    </div>
+
+    <div>
+        <label>Status</label><br>
+        <input type="radio" th:field="*{status}" value="Active"/> Active
+        <input type="radio" th:field="*{status}" value="Unactive"/> Unactive
+    </div>
+
+    <div>
+        <label>Create At</label><br>
+        <input type="date" th:field="*{createAt}"/>
+    </div>
+
+    <div>
+        <label>Detail Description</label><br>
+        <textarea th:field="*{detailDescription}" placeholder="Detail description"></textarea>
+    </div>
+
+    <div>
+        <label>Ingredients</label><br>
+        <textarea th:field="*{ingredients}" placeholder="Ingredients"></textarea>
+    </div>
+
+    <div>
+        <label>Weight (gram)</label><br>
+        <input type="number" th:field="*{weight}" placeholder="Weight"/>
+    </div>
+
+    <hr>
+
+    <button formaction="/product/create">Create</button>
+    <button formaction="/product/update">Update</button>
+    <a th:href="@{|/product/delete/${item.id}|}">Delete</a>
+    <a href="/product/index">Reset</a>
+	<a href="/product/sort/price">Sắp xếp theo giá tăng dần</a>
+	<a href="/product/sort/price2">Sắp xếp theo giá giảm dần</a>
+</form>

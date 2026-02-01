@@ -1,0 +1,48 @@
+<table border="1" style="width:100%; border-collapse: collapse;">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Product Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Category ID</th>
+            <th>Image</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Create At</th>
+            <th>Detail Description</th>
+            <th>Ingredients</th>
+            <th>Weight</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <th:block th:each="item : ${items}">
+            <tr>
+                <td th:text="${item.id}"></td>
+                <td th:text="${item.productName}"></td>
+                <td th:text="${item.price}"></td>
+                <td th:text="${item.quantity}"></td>
+                <td th:text="${item.categoryID}"></td>
+
+                <!-- Image -->
+                <td>
+                    <img th:src="@{/images/{img}(img=${item.image})}"
+                         width="80" height="80" alt="Product Image"/>
+                </td>
+
+                <td th:text="${item.description}"></td>
+                <td th:text="${item.status}"></td>
+
+                <!-- Date -->
+                <td th:text="${#dates.format(item.createAt, 'dd/MM/yyyy')}"></td>
+
+                <td th:text="${item.detailDescription}"></td>
+                <td th:text="${item.ingredients}"></td>
+                <td th:text="${item.weight}"></td>
+				<td><a th:href="@{/product/edit/{id}(id=${item.id})}">Edit</a></td>
+            </tr>
+        </th:block>
+    </tbody>
+</table>
